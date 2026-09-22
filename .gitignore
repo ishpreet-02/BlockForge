@@ -53,3 +53,13 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Compiled binaries
+blockforge
+tetris
+
+# Object files
+*.o
+
+# Executables
+*.exe
