@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include "game.h"
-
+#include "board.h"
 
 void initialize_game()
 {
     printf("Initializing game components...\n");
-}
 
+    initialize_board();
+
+    display_board();
+}
 
 void run_game()
 {
