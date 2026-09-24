@@ -6,9 +6,14 @@
 #define BOARD_COLS 10
 
 
+#include "piece.h"
+
+
 void initialize_board();
 
 void display_board();
+
+void display_board_with_piece(Piece *piece);
 
 
 #endif

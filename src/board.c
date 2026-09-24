@@ -41,7 +41,7 @@ void display_board()
             }
             else
             {
-                printf("# ");
+                printf("[] ");
             }
         }
 
@@ -57,4 +57,48 @@ void display_board()
     }
 
     printf("+\n");
+}
+
+void display_board_with_piece(Piece *piece)
+{
+    printf("+--------------------+\n");
+
+
+    for(int row = 0; row < BOARD_ROWS; row++)
+    {
+        printf("|");
+
+        for(int col = 0; col < BOARD_COLS; col++)
+        {
+            int printed = 0;
+
+
+            for(int pRow = 0; pRow < PIECE_SIZE; pRow++)
+            {
+                for(int pCol = 0; pCol < PIECE_SIZE; pCol++)
+                {
+
+                    if(piece->shape[pRow][pCol] == 1 &&
+                       piece->y + pRow == row &&
+                       piece->x + pCol == col)
+                    {
+                        printf("# ");
+                        printed = 1;
+                    }
+
+                }
+            }
+
+
+            if(!printed)
+            {
+                printf(". ");
+            }
+        }
+
+        printf("|\n");
+    }
+
+
+    printf("+--------------------+\n");
 }
