@@ -20,4 +20,11 @@ void create_piece(Piece *piece);
 void spawn_piece(Piece *piece);
 
 
+void move_left(Piece *piece);
+
+void move_right(Piece *piece);
+
+void move_down(Piece *piece);
+
+
 #endif

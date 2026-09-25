@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "board.h"
-
+#include <stdio.h>
 
 int board[BOARD_ROWS][BOARD_COLS];
 
@@ -101,4 +101,10 @@ void display_board_with_piece(Piece *piece)
 
 
     printf("+--------------------+\n");
+}
+
+void clear_screen()
+{
+    printf("\033[2J");
+    printf("\033[H");
 }

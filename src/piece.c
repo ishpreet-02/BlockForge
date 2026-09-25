@@ -31,3 +31,20 @@ void spawn_piece(Piece *piece)
     piece->x = 3;
     piece->y = 0;
 }
+
+void move_left(Piece *piece)
+{
+    piece->x--;
+}
+
+
+void move_right(Piece *piece)
+{
+    piece->x++;
+}
+
+
+void move_down(Piece *piece)
+{
+    piece->y++;
+}
