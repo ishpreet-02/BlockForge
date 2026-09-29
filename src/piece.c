@@ -1,9 +1,9 @@
 #include "piece.h"
 #include "collision.h"
 
+
 void create_piece(Piece *piece)
 {
-
     int default_piece[PIECE_SIZE][PIECE_SIZE] =
     {
         {0,1,0,0},
@@ -24,13 +24,16 @@ void create_piece(Piece *piece)
 
     piece->x = 3;
     piece->y = 0;
-
 }
+
+
 void spawn_piece(Piece *piece)
 {
     piece->x = 3;
     piece->y = 0;
 }
+
+
 int try_move(Piece *piece, int dx, int dy)
 {
     piece->x += dx;
@@ -62,7 +65,7 @@ void move_right(Piece *piece)
 }
 
 
-void move_down(Piece *piece)
+int move_down(Piece *piece)
 {
-    try_move(piece, 0, 1);
+    return try_move(piece, 0, 1);
 }

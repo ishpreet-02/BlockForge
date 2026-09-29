@@ -1,7 +1,6 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-
 #define PIECE_SIZE 4
 
 
@@ -24,7 +23,7 @@ void move_left(Piece *piece);
 
 void move_right(Piece *piece);
 
-void move_down(Piece *piece);
+int move_down(Piece *piece);
 
 int try_move(Piece *piece, int dx, int dy);
 

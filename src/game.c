@@ -4,7 +4,6 @@
 #include "board.h"
 #include "piece.h"
 #include "input.h"
-#include "collision.h"
 
 
 void initialize_game()
@@ -35,10 +34,29 @@ void run_game()
         char key = get_input();
 
 
-        if(key == 'a')      move_left(&current_piece);
-        else if(key == 'd') move_right(&current_piece);
-        else if(key == 's') move_down(&current_piece);
-        else if(key == 'q') running = 0;
+        if(key == 'a')
+        {
+            move_left(&current_piece);
+        }
+        else if(key == 'd')
+        {
+            move_right(&current_piece);
+        }
+        else if(key == 's')
+        {
+            if(!move_down(&current_piece)){
+            
+                lock_piece(&current_piece);
+
+                create_piece(&current_piece);
+
+                spawn_piece(&current_piece);
+            }
+        }
+        else if(key == 'q')
+        {
+            running = 0;
+        }
     }
 
     leave_screen();
