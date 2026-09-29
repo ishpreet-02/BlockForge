@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
 #include "board.h"
 #include "piece.h"
 
@@ -101,10 +103,33 @@ void display_board_with_piece(Piece *piece)
 
 
     printf("+--------------------+\n");
+    printf("a/d: move  s: down  q: quit\033[K\n");
+    printf("\033[J");
+    fflush(stdout);
 }
 
-void clear_screen()
+static void on_sigint(int sig)
 {
-    printf("\033[H\033[J");
+    (void)sig;
+    const char seq[] = "[?25h[?1049l";
+    write(STDOUT_FILENO, seq, sizeof(seq) - 1);
+    _exit(0);
+}
+
+void enter_screen(void)
+{
+    signal(SIGINT, on_sigint);
+    printf("[?1049h[?25l[2J[H");
     fflush(stdout);
+}
+
+void leave_screen(void)
+{
+    printf("[?1049l[?25h");
+    fflush(stdout);
+}
+
+void clear_screen(void)
+{
+    printf("[H");
 }

@@ -24,6 +24,8 @@ void run_game()
 
     int running = 1;
 
+    enter_screen();
+
     while(running)
     {
         clear_screen();
@@ -33,32 +35,13 @@ void run_game()
         char key = get_input();
 
 
-        if(key == 'a')
-        {
-            if(!check_collision(&current_piece, -1, 0))
-            {
-                move_left(&current_piece);
-            }
-        }
-        else if(key == 'd')
-        {
-            if(!check_collision(&current_piece, 1, 0))
-            {
-                move_right(&current_piece);
-            }
-        }
-        else if(key == 's')
-        {
-            if(!check_collision(&current_piece, 0, 1))
-            {
-                move_down(&current_piece);
-            }
-        }
-        else if(key == 'q')
-        {
-            running = 0;
-        }
+        if(key == 'a')      move_left(&current_piece);
+        else if(key == 'd') move_right(&current_piece);
+        else if(key == 's') move_down(&current_piece);
+        else if(key == 'q') running = 0;
     }
+
+    leave_screen();
 }
 
 
