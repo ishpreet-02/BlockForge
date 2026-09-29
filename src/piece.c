@@ -1,5 +1,5 @@
 #include "piece.h"
-
+#include "collision.h"
 
 void create_piece(Piece *piece)
 {
@@ -31,20 +31,38 @@ void spawn_piece(Piece *piece)
     piece->x = 3;
     piece->y = 0;
 }
+int try_move(Piece *piece, int dx, int dy)
+{
+    piece->x += dx;
+    piece->y += dy;
+
+
+    if(check_collision(piece))
+    {
+        piece->x -= dx;
+        piece->y -= dy;
+
+        return 0;
+    }
+
+
+    return 1;
+}
+
 
 void move_left(Piece *piece)
 {
-    piece->x--;
+    try_move(piece, -1, 0);
 }
 
 
 void move_right(Piece *piece)
 {
-    piece->x++;
+    try_move(piece, 1, 0);
 }
 
 
 void move_down(Piece *piece)
 {
-    piece->y++;
+    try_move(piece, 0, 1);
 }

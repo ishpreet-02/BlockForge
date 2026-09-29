@@ -2,7 +2,7 @@ CC=gcc
 
 CFLAGS=-Iinclude
 
-SRC=src/main.c src/game.c src/board.c src/piece.c src/input.c
+SRC=src/main.c src/game.c src/board.c src/piece.c src/input.c src/collision.c
 
 OUTPUT=blockforge
 

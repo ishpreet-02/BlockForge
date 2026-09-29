@@ -26,5 +26,6 @@ void move_right(Piece *piece);
 
 void move_down(Piece *piece);
 
+int try_move(Piece *piece, int dx, int dy);
 
 #endif
