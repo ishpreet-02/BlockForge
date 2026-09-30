@@ -56,6 +56,10 @@ void run_game()
         {
             move_right(&current_piece);
         }
+        else if(key == 'w')
+        {
+            rotate_piece(&current_piece);
+        }
         else if(key == 's')
         {
             /*

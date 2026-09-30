@@ -27,4 +27,6 @@ int move_down(Piece *piece);
 
 int try_move(Piece *piece, int dx, int dy);
 
+void rotate_piece(Piece *piece);
+
 #endif
