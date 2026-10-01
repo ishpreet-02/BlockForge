@@ -73,6 +73,8 @@ void run_game()
             {
                 lock_piece(&current_piece);
 
+                clear_completed_lines();
+
                 create_piece(&current_piece);
                 spawn_piece(&current_piece);
             }
@@ -119,6 +121,9 @@ void run_game()
                  * Therefore lock it.
                  */
                 lock_piece(&current_piece);
+
+
+                clear_completed_lines();
 
 
                 /*

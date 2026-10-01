@@ -16,6 +16,8 @@ void display_board_with_piece(Piece *piece);
 
 void lock_piece(Piece *piece);
 
+int clear_completed_lines(void);
+
 void clear_screen(void);
 
 void enter_screen(void);

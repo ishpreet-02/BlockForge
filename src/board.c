@@ -159,6 +159,75 @@ void lock_piece(Piece *piece)
 }
 
 
+int clear_completed_lines(void)
+{
+    int lines_cleared = 0;
+
+    /*
+     * Start from the bottom of the board.
+     */
+    for(int row = BOARD_ROWS - 1; row >= 0; row--)
+    {
+        int row_full = 1;
+
+        /*
+         * Check whether every cell in this row is occupied.
+         */
+        for(int col = 0; col < BOARD_COLS; col++)
+        {
+            if(board[row][col] == 0)
+            {
+                row_full = 0;
+                break;
+            }
+        }
+
+        /*
+         * If the row is completely filled,
+         * remove it and shift all rows above it downward.
+         */
+        if(row_full)
+        {
+            lines_cleared++;
+
+            /*
+             * Move every row above the completed row
+             * one position downward.
+             */
+            for(int current_row = row;
+                current_row > 0;
+                current_row--)
+            {
+                for(int col = 0; col < BOARD_COLS; col++)
+                {
+                    board[current_row][col] =
+                        board[current_row - 1][col];
+                }
+            }
+
+            /*
+             * The top row has no row above it,
+             * so clear it.
+             */
+            for(int col = 0; col < BOARD_COLS; col++)
+            {
+                board[0][col] = 0;
+            }
+
+            /*
+             * Check this same row again.
+             *
+             * Another completed row may have shifted
+             * down into this position.
+             */
+            row++;
+        }
+    }
+
+    return lines_cleared;
+}
+
+
 static void on_sigint(int sig)
 {
     (void)sig;
