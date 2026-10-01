@@ -124,7 +124,7 @@ void display_board_with_piece(Piece *piece)
 
 
     printf("+--------------------+\n");
-    printf("a/d: move  s: down  q: quit\033[K\n");
+    printf("a/d: move  w: rotate  s: down  q: quit\033[K\n");
 
     printf("\033[J");
 

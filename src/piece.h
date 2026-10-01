@@ -2,7 +2,18 @@
 #define PIECE_H
 
 #define PIECE_SIZE 4
+#define PIECE_COUNT 7
 
+typedef enum
+{
+    PIECE_I,
+    PIECE_O,
+    PIECE_T,
+    PIECE_S,
+    PIECE_Z,
+    PIECE_J,
+    PIECE_L
+} PieceType;
 
 typedef struct
 {
@@ -10,6 +21,7 @@ typedef struct
 
     int x;
     int y;
+    PieceType type;
 
 } Piece;
 
@@ -28,5 +40,7 @@ int move_down(Piece *piece);
 int try_move(Piece *piece, int dx, int dy);
 
 void rotate_piece(Piece *piece);
+
+void initialize_piece_system(void);
 
 #endif

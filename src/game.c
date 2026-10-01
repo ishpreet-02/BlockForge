@@ -14,6 +14,7 @@ void initialize_game()
     printf("Initializing game components...\n");
 
     initialize_board();
+    initialize_piece_system();
 }
 
 
