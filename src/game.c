@@ -5,6 +5,7 @@
 #include "board.h"
 #include "piece.h"
 #include "input.h"
+#include "score.h"
 
 #define GRAVITY_INTERVAL_MS 500
 
@@ -15,6 +16,7 @@ void initialize_game()
 
     initialize_board();
     initialize_piece_system();
+    initialize_score();
 }
 
 
@@ -46,6 +48,11 @@ void run_game()
     while(running)
     {
         clear_screen();
+
+        printf("BLOCKFORGE\n");
+        printf("Score: %d\n", get_score());
+        printf("Lines: %d\n\n", get_lines_cleared());
+
         display_board_with_piece(&current_piece);
 
         char key = get_input();
@@ -73,7 +80,8 @@ void run_game()
             {
                 lock_piece(&current_piece);
 
-                clear_completed_lines();
+                int lines_cleared = clear_completed_lines();
+                update_score(lines_cleared);
 
                 create_piece(&current_piece);
                 spawn_piece(&current_piece);
@@ -104,11 +112,6 @@ void run_game()
         long long elapsed_time =
             current_time_ms - last_gravity_time;
 
-
-        /*
-         * Has enough time passed for the
-         * piece to fall automatically?
-         */
         if(elapsed_time >= GRAVITY_INTERVAL_MS)
         {
             /*
@@ -123,7 +126,8 @@ void run_game()
                 lock_piece(&current_piece);
 
 
-                clear_completed_lines();
+                int lines_cleared = clear_completed_lines();
+                update_score(lines_cleared);
 
 
                 /*
