@@ -1,19 +1,19 @@
-CC=gcc
+CC = gcc
 
-CFLAGS=-Iinclude
+CFLAGS = -Wall -Wextra -std=c11 -D_POSIX_C_SOURCE=200809L -Iinclude
 
-SRC=src/main.c src/game.c src/board.c src/piece.c src/input.c src/collision.c src/score.c
+TARGET = blockforge
 
-OUTPUT=blockforge
+SOURCES = src/main.c \
+          src/game.c \
+          src/board.c \
+          src/piece.c \
+          src/input.c \
+          src/collision.c \
+          src/score.c
 
-
-all:
-	$(CC) $(SRC) $(CFLAGS) -o $(OUTPUT)
-
-
-run:
-	./$(OUTPUT)
-
+$(TARGET): $(SOURCES)
+	$(CC) $(CFLAGS) $(SOURCES) -o $(TARGET)
 
 clean:
-	rm $(OUTPUT)
+	rm -f $(TARGET)
