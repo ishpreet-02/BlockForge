@@ -41,3 +41,4 @@ int get_lines_cleared(void)
 {
     return total_lines_cleared;
 }
+
