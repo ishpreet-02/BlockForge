@@ -58,6 +58,29 @@ dkms.conf
 blockforge
 tetris
 
+# Build directories
+/build/
+/bin/
+/obj/
+/cmake-build-*/
+
+# IDE settings
+.vscode/
+.vs/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local secrets and private configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
 # Object files
 *.o
 
