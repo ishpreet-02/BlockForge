@@ -5,10 +5,10 @@
 #include "board.h"
 #include "piece.h"
 #include "input.h"
+#include "collision.h"
 #include "score.h"
 
 #define GRAVITY_INTERVAL_MS 500
-
 
 void initialize_game()
 {
@@ -19,7 +19,6 @@ void initialize_game()
     initialize_score();
 }
 
-
 void run_game()
 {
     Piece current_piece;
@@ -27,11 +26,20 @@ void run_game()
     create_piece(&current_piece);
     spawn_piece(&current_piece);
 
+    /*
+     * Check whether the first piece can be spawned.
+     * If the spawn position is already occupied,
+     * the game cannot start.
+     */
+    if(check_collision(&current_piece))
+    {
+        printf("\nGAME OVER!\n");
+        return;
+    }
 
     int running = 1;
-
+    int game_over = 0;
     long long last_gravity_time = 0;
-
 
     initialize_input();
     enter_screen();
@@ -44,7 +52,6 @@ void run_game()
         (long long)start_time.tv_sec * 1000 +
         start_time.tv_nsec / 1000000;
 
-
     while(running)
     {
         clear_screen();
@@ -56,6 +63,7 @@ void run_game()
         display_board_with_piece(&current_piece);
 
         char key = get_input();
+
         if(key == 'a')
         {
             move_left(&current_piece);
@@ -70,21 +78,27 @@ void run_game()
         }
         else if(key == 's')
         {
-            /*
-             * Manual soft drop.
-             *
-             * If the piece cannot move down,
-             * lock it and spawn another piece.
-             */
             if(!move_down(&current_piece))
             {
                 lock_piece(&current_piece);
 
                 int lines_cleared = clear_completed_lines();
+
                 update_score(lines_cleared);
 
                 create_piece(&current_piece);
                 spawn_piece(&current_piece);
+
+                /*
+                 * Check whether the new piece can be spawned.
+                 * If it immediately collides with the board,
+                 * the game is over.
+                 */
+                if(check_collision(&current_piece))
+                {
+                    game_over = 1;
+                    running = 0;
+                }
             }
         }
         else if(key == 'q')
@@ -92,65 +106,58 @@ void run_game()
             running = 0;
         }
 
-
-        /*
-         * -----------------------------
-         * AUTOMATIC GRAVITY
-         * -----------------------------
-         */
-
         struct timespec current_time;
 
         clock_gettime(CLOCK_MONOTONIC, &current_time);
-
 
         long long current_time_ms =
             (long long)current_time.tv_sec * 1000 +
             current_time.tv_nsec / 1000000;
 
-
         long long elapsed_time =
             current_time_ms - last_gravity_time;
 
-        if(elapsed_time >= GRAVITY_INTERVAL_MS)
+        if(elapsed_time >= GRAVITY_INTERVAL_MS && running)
         {
-            /*
-             * Try to move the piece down.
-             */
             if(!move_down(&current_piece))
             {
-                /*
-                 * The piece cannot move down.
-                 * Therefore lock it.
-                 */
                 lock_piece(&current_piece);
 
-
                 int lines_cleared = clear_completed_lines();
+
                 update_score(lines_cleared);
 
-
-                /*
-                 * Create and spawn the next piece.
-                 */
                 create_piece(&current_piece);
                 spawn_piece(&current_piece);
+
+                /*
+                 * Check whether the new piece can be spawned.
+                 * If it immediately collides with the board,
+                 * the game is over.
+                 */
+                if(check_collision(&current_piece))
+                {
+                    game_over = 1;
+                    running = 0;
+                }
             }
 
-
-            /*
-             * Reset gravity timer.
-             */
             last_gravity_time = current_time_ms;
         }
     }
 
-
     shutdown_input();
-
     leave_screen();
-}
 
+    if(game_over)
+    {
+        printf("\n====================\n");
+        printf("     GAME OVER!\n");
+        printf("====================\n");
+        printf("Score: %d\n", get_score());
+        printf("Lines: %d\n", get_lines_cleared());
+    }
+}
 
 void shutdown_game()
 {

@@ -2,7 +2,7 @@
 
 A terminal-based Tetris-style game written in C, using a modular game engine and POSIX terminal APIs for Linux and WSL.
 
-Players arrange falling Tetrominoes on a 20 × 10 board, clear horizontal lines, and earn points. The current implementation includes movement, rotation, automatic gravity, a 7-bag piece randomizer, line clearing, and scoring. It is a playable development version; game-over detection is still planned.
+Players arrange falling Tetrominoes on a 20 × 10 board, clear horizontal lines, and earn points. The current implementation includes movement, rotation, automatic gravity, a 7-bag piece randomizer, line clearing, scoring, and game-over detection when a piece cannot spawn.
 
 ## Project Proposal
 
@@ -67,7 +67,7 @@ The game proceeds through these steps:
 4. Read a key and apply the corresponding action.
 5. Attempt a gravity step when the interval expires.
 6. After a failed downward move, lock the piece, clear completed rows, update the score, and spawn another piece.
-7. Repeat until the player presses `q`, then restore input settings and leave the alternate screen.
+7. Check each spawned piece for collisions. End the game if its spawn position is blocked; otherwise repeat until the player presses `q`. Restore input settings and leave the alternate screen, displaying the final score and line count after game over.
 
 ## Repository Layout
 
@@ -151,11 +151,11 @@ These milestones describe implementation progress; submission dates and instruct
 | 4 | Seven Tetrominoes and 7-bag randomization | Implemented |
 | 5 | Line clearing, scoring, and score display | Implemented |
 | 6 | README proposal, build instructions, ignore rules, and license | Included |
-| 7 | Game-over detection, terminal cleanup improvements, and gameplay validation | Planned |
+| 7 | Spawn-collision game-over detection and final score display | Implemented |
+| 8 | Terminal cleanup improvements and gameplay validation | Planned |
 
 ## Known Limitations and Planned Improvements
 
-- Spawn collisions do not end the game yet. When the board fills to the spawn area, pieces can overlap existing blocks.
 - Rotation has no wall kicks and uses the full 4 × 4 matrix as its rotation frame.
 - Gravity stays at a fixed speed; levels, pause, hard drop, hold, and next-piece preview are not implemented.
 - Manual locking does not reset the gravity timer, so a newly spawned piece may fall immediately.
