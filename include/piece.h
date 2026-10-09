@@ -1,6 +1,5 @@
 #ifndef PIECE_H
 #define PIECE_H
-
 #define PIECE_SIZE 4
 #define PIECE_COUNT 7
 
@@ -29,7 +28,6 @@ typedef struct
 void create_piece(Piece *piece);
 
 void spawn_piece(Piece *piece);
-
 
 void move_left(Piece *piece);
 

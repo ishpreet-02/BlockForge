@@ -3,16 +3,13 @@
 static int score = 0;
 static int total_lines_cleared = 0;
 
-void initialize_score(void)
-{
+void initialize_score(void) {
     score = 0;
     total_lines_cleared = 0;
 }
 
-void update_score(int lines_cleared)
-{
-    switch(lines_cleared)
-    {
+void update_score(int lines_cleared) {
+    switch (lines_cleared) {
         case 1:
             score += 100;
             break;
@@ -32,13 +29,10 @@ void update_score(int lines_cleared)
     total_lines_cleared += lines_cleared;
 }
 
-int get_score(void)
-{
+int get_score(void) {
     return score;
 }
 
-int get_lines_cleared(void)
-{
+int get_lines_cleared(void) {
     return total_lines_cleared;
 }
-

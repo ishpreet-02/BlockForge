@@ -1,6 +1,5 @@
 #ifndef BOARD_H
 #define BOARD_H
-
 #define BOARD_ROWS 20
 #define BOARD_COLS 10
 
